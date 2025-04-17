@@ -5,7 +5,9 @@ import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddin
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { url, question } = req.body;
+    const { question } = req.body;
+    const url =
+        "https://www.linkedin.com/pulse/data-structures-powering-our-database-part-2-saurav-prateek";
 
     try {
         if (typeof url !== "string") {
@@ -15,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const docs = await loader.load();
 
         const splitter = new RecursiveCharacterTextSplitter({
-            chunkSize: 250,
+            chunkSize: 1000,
             chunkOverlap: 0,
         });
         const splitDocs = await splitter.splitDocuments(docs);
@@ -26,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         );
         const retriever = vectorStore.asRetriever();
         const retrievedDocs = await retriever.invoke(question);
-
+        // Return the retrieved documents
         res.status(200).json({ documents: retrievedDocs });
     } catch (err) {
         console.error("Error scraping:", err);

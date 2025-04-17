@@ -1,20 +1,29 @@
-// index.tsx
-import { useState, useEffect } from 'react';
-import { generateAnswer } from '@/lib/rag/rag-agent-i';
+import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState("");
 
-  // Option 1: Run when component loads (for testing)
   useEffect(() => {
-    const runRAG = async () => {
-      const result = await generateAnswer();
-      console.log("RAG Result:", result);
-      setAnswer(JSON.stringify(result, null, 2));
+    const getAnswer = async (question: string) => {
+      try {
+        const response = await fetch("/api/rag-agent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question }),
+        });
+
+        const data = await response.json();
+        console.log(data.answer);
+        setAnswer(data.answer);
+      } catch (err) {
+        console.error("Error fetching answer:", err);
+        setAnswer("Error fetching answer.");
+      }
     };
 
-    runRAG();
+    getAnswer("What are LSM Trees?");
   }, []);
+
 
   return (
     <div>
