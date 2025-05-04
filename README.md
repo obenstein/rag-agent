@@ -1,18 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# RAG Agent
+
+This is a [Next.js](https://nextjs.org) project that demonstrates a Retrieval-Augmented Generation (RAG) system. The project integrates various AI tools and libraries to create a knowledge-based question-answering system.
+
+## Features
+
+- **Knowledge Base Initialization**: Users can input a knowledge base, which is processed and stored in a vector store for retrieval.
+- **Question Answering**: Users can query the system, and it retrieves relevant documents and generates answers using a language model.
+- **Document Grading**: The system grades the relevance of retrieved documents and generated answers to ensure quality.
+- **Embeddings and Vector Store**: Uses Hugging Face Transformers for embeddings and an in-memory vector store for document retrieval.
+- **API Integration**: Includes API routes for vector store management and RAG agent execution.
+
+## Tech Stack
+
+- **Frontend**: React with Next.js
+- **Backend**: Next.js API routes
+- **AI Libraries**: LangChain, Hugging Face Transformers, OpenAI, Ollama
+- **Styling**: Tailwind CSS
+- **Build Tools**: TypeScript, ESLint, PostCSS
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v18 or higher)
+- npm, yarn, or pnpm package manager
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-repo/rag-agent.git
+   cd rag-agent
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   # or
+   bun dev
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

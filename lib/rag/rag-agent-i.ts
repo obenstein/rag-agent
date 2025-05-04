@@ -7,15 +7,14 @@ import { GRADER_TEMPLATE, ANSWER_GRADER_PROMPT_TEMPLATE } from "../../lib/rag/co
 import * as hub from "langchain/hub";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { END, MemorySaver, START, StateGraph } from "@langchain/langgraph";
-import { ChatOllama } from "@langchain/community/chat_models/ollama";
-
+import { ChatOllama } from "@langchain/ollama";
 
 
 interface GraphInterface {
     question: string;
     generatedAnswer: string;
     documents: Document[];
-    model: ChatOpenAI;
+    model: ChatOllama;
 }
 
 const graphChannel = {
@@ -63,9 +62,17 @@ const documentGrader = async (state: GraphInterface) => {
             content: doc.pageContent,
         });
 
-        const cleanGraderResponse = docGraderResponse.content
-        console.log({ cleanGraderResponse });
-        if (cleanGraderResponse === "yes") {
+        const rawGraderResponse = docGraderResponse.content;
+        const cleanGraderResponse = typeof rawGraderResponse === 'string'
+            ? rawGraderResponse
+            : JSON.stringify(rawGraderResponse);
+
+        // Optional: Strip out markdown formatting, trim spaces, etc., for robustness
+        const normalizedResponse = cleanGraderResponse.toLowerCase().trim();
+
+        const isRelevant = /(^|\n|\s)\*{0,2}yes\*{0,2}(\n|\s|\.|$)/i.test(normalizedResponse);
+
+        if (isRelevant) {
             relevantDocs.push(doc);
         }
     }
@@ -74,10 +81,11 @@ const documentGrader = async (state: GraphInterface) => {
     return { documents: relevantDocs };
 };
 
+
 const createModel = async (state: GraphInterface) => {
     const model = new ChatOllama({
         baseUrl: "http://172.208.52.162:11434", // 👈 Your Ollama local URL
-        model: "llama3", // 👈 Match this with `ollama list` output
+        model: "llama3.1", // 👈 Match this with `ollama list` output
         temperature: 0,
     });
 

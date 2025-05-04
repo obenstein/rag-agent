@@ -21,7 +21,7 @@ export default function Home() {
       }
     };
 
-    getAnswer("What are LSM Trees?");
+    getAnswer("What does this article say about Looming Wall of Debt?");
   }, []);
 
 
@@ -29,7 +29,7 @@ export default function Home() {
     <div>
       <h1>RAG Agent</h1>
       <p>Ask me anything!</p>
-      <pre>{answer}</pre>
+      <h3>{answer}</h3>
     </div>
   );
 }

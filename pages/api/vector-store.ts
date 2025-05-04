@@ -7,8 +7,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { question } = req.body;
     const url =
-        "https://www.linkedin.com/pulse/data-structures-powering-our-database-part-2-saurav-prateek";
-
+        "https://www.forbes.com/sites/tonyaevans/2025/04/22/bitbonds-a-new-take-on-treasury-bonds-to-tackle-the-us-debt-crisis/";
+    https://medium.com/data-science-collective/mastering-stacks-and-queues-key-data-structures-and-algorithms-for-data-science-40d1ba93ab00
     try {
         if (typeof url !== "string") {
             throw new Error("Invalid URL: URL must be a string");
